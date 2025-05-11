@@ -33,7 +33,7 @@
     }).addTo(map);
 
     // تحميل ملف GeoJSON من نفس مجلد المشروع
-    fetch('your_file.geojson') // غيّر الاسم حسب اسم الملف
+    fetch('mazaree.geojson') // غيّر الاسم حسب اسم الملف
       .then(response => response.json())
       .then(data => {
         L.geoJSON(data).addTo(map);
