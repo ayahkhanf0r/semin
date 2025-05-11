@@ -2,11 +2,13 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <title>مزارع النوباني - عرض الخريطة</title>
+  <title>عرض ملف GeoJSON على الخريطة</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- رابط Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"/>
 
+  <!-- تنسيق الخريطة -->
   <style>
     #map {
       height: 100vh;
@@ -18,25 +20,23 @@
 
   <div id="map"></div>
 
+  <!-- رابط Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
 
   <script>
-    var map = L.map('map').setView([32.0346, 35.1439], 13); // مركز مزارع النوباني
+    // إنشاء الخريطة
+    var map = L.map('map').setView([31.95, 35.93], 10); // عدل الإحداثيات حسب موقعك
 
+    // إضافة خريطة الأساس
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
-    fetch('mazaree.geojson')
+    // تحميل ملف GeoJSON من نفس مجلد المشروع
+    fetch('your_file.geojson') // غيّر الاسم حسب اسم الملف
       .then(response => response.json())
       .then(data => {
-        L.geoJSON(data, {
-          style: {
-            color: '#3388ff',
-            weight: 2,
-            fillOpacity: 0.3
-          }
-        }).addTo(map);
+        L.geoJSON(data).addTo(map);
       });
   </script>
 
