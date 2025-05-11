@@ -5,10 +5,8 @@
   <title>عرض ملف GeoJSON على الخريطة</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- رابط Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"/>
 
-  <!-- تنسيق الخريطة -->
   <style>
     #map {
       height: 100vh;
@@ -20,23 +18,30 @@
 
   <div id="map"></div>
 
-  <!-- رابط Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
 
   <script>
-    // إنشاء الخريطة
-    var map = L.map('map').setView([32.0346, 35.1439], 13); // عدل الإحداثيات حسب موقعك
+    var map = L.map('map').setView([32.0346, 35.1439], 13);
 
-    // إضافة خريطة الأساس
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
-    // تحميل ملف GeoJSON من نفس مجلد المشروع
-    fetch('mazaree.geojson') // غيّر الاسم حسب اسم الملف
+    fetch('mazaree.geojson')
       .then(response => response.json())
       .then(data => {
-        L.geoJSON(data).addTo(map);
+        L.geoJSON(data, {
+          style: {
+            color: '#3388ff',
+            weight: 2,
+            fillOpacity: 0.4
+          },
+          onEachFeature: function (feature, layer) {
+            if (feature.properties && feature.properties.NAMEAR) {
+              layer.bindPopup("البلدة: " + feature.properties.NAMEAR);
+            }
+          }
+        }).addTo(map);
       });
   </script>
 
